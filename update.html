@@ -21,8 +21,12 @@
             Penerbit :e
 
         };
+        var url= window.location.pathname;
+        var id = url.substring(url.lastIndexOf('/') + 1)
+        
         var json = JSON.stringify(data);
-        xhr.open("POST", "http://localhost:8181/buku/")
+        
+        xhr.open("PUT", "http://localhost:8181/put/"+id)
         xhr.setRequestHeader("Content-type","application/json");
         xhr.send(json);
     }
@@ -30,7 +34,7 @@
 </head>
 
 <div>
-    <h1>Test</h1>
+    <h1>Update</h1>
     <form>
         ID Buku : <input type="text" id="ID_buku" >
         <br>
