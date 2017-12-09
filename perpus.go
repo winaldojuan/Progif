@@ -29,19 +29,48 @@ type myBuku2 struct{
 
 func main(){
     port:=8181
+    //ServeFile
     http.HandleFunc("/test", func(w http.ResponseWriter, r*http.Request){
         http.ServeFile(w,r,"testing.html")
     })
+
     http.HandleFunc("/update/", func (w http.ResponseWriter, r *http.Request){
         http.ServeFile(w,r,"up.html")
     })
+    
+    http.HandleFunc("/get/judul/", func (w http.ResponseWriter, r *http.Request){
+        http.ServeFile(w,r,"judul.html")
+    })
 
-  http.HandleFunc("/put/", func(w http.ResponseWriter, r *http.Request){
+    http.HandleFunc("/get/penulis/", func (w http.ResponseWriter, r *http.Request){
+        http.ServeFile(w,r,"penulis.html")
+    })
+
+    http.HandleFunc("/get/tahun/", func (w http.ResponseWriter, r *http.Request){
+        http.ServeFile(w,r,"tahun.html")
+    })
+
+    http.HandleFunc("/get/penerbit/", func (w http.ResponseWriter, r *http.Request){
+        http.ServeFile(w,r,"penerbit.html")
+    })
+    http.HandleFunc("/get/", func (w http.ResponseWriter, r *http.Request){
+        http.ServeFile(w,r,"getall.html")
+    })
+
+    //PUT Request
+    http.HandleFunc("/put/", func(w http.ResponseWriter, r *http.Request){
      
-                http.ServeFile(w,r,"update.html")
+        switch r.Method{
+        case "GET":
+            http.ServeFile(w,r,"update.html")
+        case "PUT":
+            s := r.URL.Path[len("/put/"):]
+            UpdateBuku(w,r,s)
+            break
+        }
        
     })
-  
+
     http.HandleFunc("/buku/", func(w http.ResponseWriter, r*http.Request){
         switch r.Method{
 		case "GET":
@@ -54,20 +83,28 @@ func main(){
 			}else if r.URL.Query().Get("tahun") != ""{
 				tahun := r.URL.Query().Get("tahun")
 				SearchByTahun(w,r,tahun)
+			}else if r.URL.Query().Get("penulis") != ""{
+				penulis := r.URL.Query().Get("penulis")
+				SearchByPenulis(w,r,penulis)
 			}else{
 				GetAllBuku(w,r)
-			}
+            }
+            break
             
         case "POST":
             InsertBuku(w,r)
+            break
 		case "DELETE":
 			s := r.URL.Path[len("/buku/"):]
-			DeleteBuku(w,r,s)
+            DeleteBuku(w,r,s)
+            break
 		case "PUT":
 			s := r.URL.Path[len("/buku/"):]
-			UpdateBuku(w,r,s)
+            UpdateBuku(w,r,s)
+            break
         default:
             http.Error(w, "Invalid request method.", 405)
+            break
         }
     })
     log.Printf("Server starting on port %v\n",port)
@@ -76,6 +113,7 @@ func main(){
 
 func GetAllBuku(w http.ResponseWriter, r *http.Request){
     db,err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/perpustakaan")
+    w.Header().Set("Content-Type", "application/json")
     if err!=nil{
         log.Fatal(err)
     }
@@ -106,7 +144,8 @@ func GetAllBuku(w http.ResponseWriter, r *http.Request){
 }
 
 func SearchByJudul(w http.ResponseWriter, r *http.Request, s string){
-	db,err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/perpustakaan")
+    db,err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/perpustakaan")
+    w.Header().Set("Content-Type", "application/json")
     if err!=nil{
         log.Fatal(err)
     }
@@ -134,9 +173,39 @@ func SearchByJudul(w http.ResponseWriter, r *http.Request, s string){
     }
 	err = rows.Err()
 }
+func SearchByPenulis(w http.ResponseWriter, r *http.Request, s string){
+    db,err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/perpustakaan")
+    w.Header().Set("Content-Type", "application/json")
+    if err!=nil{
+        log.Fatal(err)
+    }
+    defer db.Close()
 
+    buku:=myBuku{}
+
+    rows,err :=db.Query("select ID_buku, Judul, Penulis, Tahun_terbit, Penerbit from buku where Penulis like ?", "%"+s+"%")
+
+    if err!=nil{
+        log.Fatal(err)
+    }
+    defer rows.Close()
+
+    
+    for rows.Next(){
+
+        err := rows.Scan(&buku.ID_buku, &buku.Judul, &buku.Penulis, &buku.Tahun_terbit, &buku.Penerbit)
+        //fmt.printf("%v", buku.id_buku)
+        if err!=nil{
+            log.Fatal(err)
+        }
+	
+        json.NewEncoder(w).Encode(&buku)
+    }
+	err = rows.Err()
+}
 func SearchByPenerbit(w http.ResponseWriter, r *http.Request, s string){
-	db,err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/perpustakaan")
+    db,err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/perpustakaan")
+    w.Header().Set("Content-Type", "application/json")
     if err!=nil{
         log.Fatal(err)
     }
@@ -167,7 +236,8 @@ func SearchByPenerbit(w http.ResponseWriter, r *http.Request, s string){
 
 func SearchByTahun(w http.ResponseWriter, r *http.Request, s string){
 	sint, _ :=strconv.Atoi(s)
-	db,err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/perpustakaan")
+    db,err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/perpustakaan")
+    w.Header().Set("Content-Type", "application/json")
     if err!=nil{
         log.Fatal(err)
     }

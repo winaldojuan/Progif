@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<meta charset = "utf-8"/>
+<head>
+    <script>
+        function search(event){
+            event.preventDefault();
+            var xhr = new XMLHttpRequest();
+            
+            xhr.open("GET", "http://localhost:8181/buku/?judul="+document.getElementById("Judul").value);
+            
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == XMLHttpRequest.DONE){
+                    document.getElementById("a").innerHTML = xhr.responseText;
+                }
+            }
+            //xhr.setRequestHeader("Content-type","application/json");
+            xhr.send(null);
+            //alert(xhr.response);
+            
+        }   
+    </script>
+</head>
+<body>
+    
+    <div>
+        <h1>Search by Judul</h1>
+    
+            
+            <br>
+            Judul : <input type="text" id="Judul">
+            <br>
+            <button onclick=search(event)>Search</button>
+           
+    </div>
+    <span id="a"></span>
+</body>
