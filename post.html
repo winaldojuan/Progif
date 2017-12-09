@@ -24,6 +24,11 @@
         var json = JSON.stringify(data);
         xhr.open("POST", "http://localhost:8181/buku/")
         xhr.setRequestHeader("Content-type","application/json");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == XMLHttpRequest.DONE){
+                document.getElementById("a").innerHTML = xhr.responseText;
+            }
+        }
         xhr.send(json);
     }
     </script>
@@ -31,7 +36,7 @@
 
 <div>
     <h1>Test</h1>
-    <form>
+    
         ID Buku : <input type="text" id="ID_buku" >
         <br>
         Judul : <input type="text" id="Judul">
@@ -43,6 +48,8 @@
         Penerbit :<input type="text" id="Penerbit">
         <br>
         <button onclick=post(event)>Post</button>
-        <input class="btn" type="submit" id="Post" value="Submit>
-    </form>
+        <br>
+        <button onclick=location.href="http://localhost:8181/home/">Home</button>
+        <br>
+    <span id="a"></span>
 </div>

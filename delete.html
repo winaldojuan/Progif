@@ -7,6 +7,11 @@
             event.preventDefault();
             var xhr = new XMLHttpRequest();
             xhr.open("DELETE", "http://localhost:8181/delete/"+document.getElementById("ID_buku").value);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == XMLHttpRequest.DONE){
+                    document.getElementById("a").innerHTML = xhr.responseText;
+                }
+            }
             xhr.send(null);
         }
     </script>
@@ -14,12 +19,11 @@
 
 <div>
     <h1>Delete</h1>
-    <form>
-
         ID Buku yang ingin dihapus: <input type="text" id="ID_buku" >
         <br>
-        
-        <button onclick=post(event)>Post</button>
-       
-    </form>
+        <button onclick=post(event)>Delete</button>
+        <br>
+        <button onclick=location.href="http://localhost:8181/home/">Home</button>
+        <br>
+    <span id="a"></span>
 </div>

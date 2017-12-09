@@ -30,7 +30,11 @@ type myBuku2 struct{
 func main(){
     port:=8181
     //ServeFile
-    http.HandleFunc("/post", func(w http.ResponseWriter, r*http.Request){
+    http.HandleFunc("/home/", func(w http.ResponseWriter, r*http.Request){
+        http.ServeFile(w,r,"homepage.html")
+    })
+    
+    http.HandleFunc("/post/", func(w http.ResponseWriter, r*http.Request){
         http.ServeFile(w,r,"post.html")
     })
 
@@ -59,31 +63,29 @@ func main(){
 
     //PUT Request
     http.HandleFunc("/put/", func(w http.ResponseWriter, r *http.Request){
-     
         switch r.Method{
         case "GET":
             http.ServeFile(w,r,"update.html")
         case "PUT":
             s := r.URL.Path[len("/put/"):]
             UpdateBuku(w,r,s)
+            GetAllTest(w,r)
             break
         }
-       
     })
 
     //DELETE Request
     http.HandleFunc("/delete/", func(w http.ResponseWriter, r *http.Request){
-        
-           switch r.Method{
+        switch r.Method{
            case "GET":
                http.ServeFile(w,r,"delete.html")
            case "DELETE":
                s := r.URL.Path[len("/delete/"):]
                DeleteBuku(w,r,s)
+               GetAllTest(w,r)
                break
-           }
-          
-       })
+        } 
+    })
 
     http.HandleFunc("/buku/", func(w http.ResponseWriter, r*http.Request){
         switch r.Method{
@@ -107,14 +109,17 @@ func main(){
             
         case "POST":
             InsertBuku(w,r)
+            GetAllTest(w,r)
             break
 		case "DELETE":
 			s := r.URL.Path[len("/buku/"):]
             DeleteBuku(w,r,s)
+            
             break
 		case "PUT":
 			s := r.URL.Path[len("/buku/"):]
             UpdateBuku(w,r,s)
+            
             break
         default:
             http.Error(w, "Invalid request method.", 405)
@@ -124,6 +129,7 @@ func main(){
     log.Printf("Server starting on port %v\n",port)
     log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v",port),nil))
 }
+
 
 func GetAllBuku(w http.ResponseWriter, r *http.Request){
     db,err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/perpustakaan")
@@ -136,6 +142,38 @@ func GetAllBuku(w http.ResponseWriter, r *http.Request){
     buku:=myBuku{}
 
     rows,err :=db.Query("select ID_buku, Judul, Penulis, Tahun_terbit, Penerbit from buku")
+
+    if err!=nil{
+        log.Fatal(err)
+    }
+    defer rows.Close()
+
+    
+    for rows.Next(){
+
+        err := rows.Scan(&buku.ID_buku, &buku.Judul, &buku.Penulis, &buku.Tahun_terbit, &buku.Penerbit)
+        //fmt.printf("%v", buku.id_buku)
+        if err!=nil{
+            log.Fatal(err)
+        }
+	
+        json.NewEncoder(w).Encode(&buku)
+    }
+	err = rows.Err()
+	
+}
+
+func GetAllTest(w http.ResponseWriter, r *http.Request){
+    db,err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/perpustakaan")
+    w.Header().Set("Content-Type", "application/json")
+    if err!=nil{
+        log.Fatal(err)
+    }
+    defer db.Close()
+
+    buku:=myBuku{}
+
+    rows,err :=db.Query("select ID_buku, Judul, Penulis, Tahun_terbit, Penerbit from test")
 
     if err!=nil{
         log.Fatal(err)

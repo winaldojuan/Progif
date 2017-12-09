@@ -22,11 +22,17 @@
 
         };
         var url= window.location.pathname;
-        var id = url.substring(url.lastIndexOf('/') + 1)
+
+        var id = url.substring(url.lastIndexOf('/') + 1);
         
         var json = JSON.stringify(data);
         
         xhr.open("PUT", "http://localhost:8181/put/"+id)
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == XMLHttpRequest.DONE){
+                document.getElementById("a").innerHTML = xhr.responseText;
+            }
+        }
         xhr.setRequestHeader("Content-type","application/json");
         xhr.send(json);
     }
@@ -35,7 +41,7 @@
 
 <div>
     <h1>Update</h1>
-    <form>
+   
         ID Buku : <input type="text" id="ID_buku" >
         <br>
         Judul : <input type="text" id="Judul">
@@ -47,6 +53,9 @@
         Penerbit :<input type="text" id="Penerbit">
         <br>
         <button onclick=post(event)>Post</button>
-        <input class="btn" type="submit" id="Post" value="Submit>
-    </form>
+        <br>
+        <button onclick=location.href="http://localhost:8181/home/">Home</button>
+        <br>
+    
+    <span id="a"></span>
 </div>
