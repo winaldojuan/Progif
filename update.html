@@ -27,7 +27,7 @@
         
         var json = JSON.stringify(data);
         
-        xhr.open("PUT", "http://localhost:8181/put/"+id)
+        xhr.open("PUT", "http://167.205.67.224:8181/put/"+id)
         xhr.onreadystatechange = function() {
             if (xhr.readyState == XMLHttpRequest.DONE){
                 document.getElementById("a").innerHTML = xhr.responseText;
@@ -54,7 +54,7 @@
         <br>
         <button onclick=post(event)>Post</button>
         <br>
-        <button onclick=location.href="http://localhost:8181/home/">Home</button>
+        <button onclick=location.href="http://167.205.67.224:8181/home/">Home</button>
         <br>
     
     <span id="a"></span>

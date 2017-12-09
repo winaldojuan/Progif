@@ -7,7 +7,7 @@
             event.preventDefault();
             var xhr = new XMLHttpRequest();
             
-            xhr.open("GET", "http://localhost:8181/buku/");
+            xhr.open("GET", "http://167.205.67.224:8181/buku/");
             
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == XMLHttpRequest.DONE){
@@ -26,7 +26,7 @@
         <h1>Click</h1>
             <br>
             <button onclick=search(event)>Get All</button>
-            <button onclick=location.href="http://localhost:8181/get/">Back</button>
+            <button onclick=location.href="http://167.205.67.224:8181/get/">Back</button>
     </div>
     <span id="a"></span>
 </body>

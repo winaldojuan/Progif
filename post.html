@@ -22,7 +22,7 @@
 
         };
         var json = JSON.stringify(data);
-        xhr.open("POST", "http://localhost:8181/buku/")
+        xhr.open("POST", "http://167.205.67.224:8181/buku/")
         xhr.setRequestHeader("Content-type","application/json");
         xhr.onreadystatechange = function() {
             if (xhr.readyState == XMLHttpRequest.DONE){
@@ -49,7 +49,7 @@
         <br>
         <button onclick=post(event)>Post</button>
         <br>
-        <button onclick=location.href="http://localhost:8181/home/">Home</button>
+        <button onclick=location.href="http://167.205.67.224:8181/home/">Home</button>
         <br>
     <span id="a"></span>
 </div>

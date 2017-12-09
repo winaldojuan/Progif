@@ -168,7 +168,7 @@ func GetAllBuku(w http.ResponseWriter, r *http.Request){
 }
 
 func GetAllTest(w http.ResponseWriter, r *http.Request){
-    db,err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/perpustakaan")
+    db,err := sql.Open("mysql", "root:@tcp(167.205.67.224:3306)/perpustakaan")
     w.Header().Set("Content-Type", "application/json")
     if err!=nil{
         log.Fatal(err)
@@ -200,7 +200,7 @@ func GetAllTest(w http.ResponseWriter, r *http.Request){
 }
 
 func SearchByJudul(w http.ResponseWriter, r *http.Request, s string){
-    db,err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/perpustakaan")
+    db,err := sql.Open("mysql", "root:@tcp(167.205.67.224:3306)/perpustakaan")
     w.Header().Set("Content-Type", "application/json")
     if err!=nil{
         log.Fatal(err)
@@ -230,7 +230,7 @@ func SearchByJudul(w http.ResponseWriter, r *http.Request, s string){
 	err = rows.Err()
 }
 func SearchByPenulis(w http.ResponseWriter, r *http.Request, s string){
-    db,err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/perpustakaan")
+    db,err := sql.Open("mysql", "root:@tcp(167.205.67.224:3306)/perpustakaan")
     w.Header().Set("Content-Type", "application/json")
     if err!=nil{
         log.Fatal(err)
@@ -260,7 +260,7 @@ func SearchByPenulis(w http.ResponseWriter, r *http.Request, s string){
 	err = rows.Err()
 }
 func SearchByPenerbit(w http.ResponseWriter, r *http.Request, s string){
-    db,err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/perpustakaan")
+    db,err := sql.Open("mysql", "root:@tcp(167.205.67.224:3306)/perpustakaan")
     w.Header().Set("Content-Type", "application/json")
     if err!=nil{
         log.Fatal(err)
@@ -292,7 +292,7 @@ func SearchByPenerbit(w http.ResponseWriter, r *http.Request, s string){
 
 func SearchByTahun(w http.ResponseWriter, r *http.Request, s string){
 	sint, _ :=strconv.Atoi(s)
-    db,err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/perpustakaan")
+    db,err := sql.Open("mysql", "root:@tcp(167.205.67.224:3306)/perpustakaan")
     w.Header().Set("Content-Type", "application/json")
     if err!=nil{
         log.Fatal(err)
@@ -331,7 +331,7 @@ func InsertBuku (w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
-	db,err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/perpustakaan")
+	db,err := sql.Open("mysql", "root:@tcp(167.205.67.224:3306)/perpustakaan")
 	if err != nil{
 		log.Fatal(err)
 	}
@@ -346,7 +346,7 @@ func InsertBuku (w http.ResponseWriter, r *http.Request) {
 func DeleteBuku(w http.ResponseWriter, r *http.Request, id string){
 	idbuku,_ := strconv.Atoi(id)
 
-	db,err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/perpustakaan")
+	db,err := sql.Open("mysql", "root:@tcp(167.205.67.224:3306)/perpustakaan")
 	if err != nil{
 		log.Fatal(err)
 	}
@@ -367,7 +367,7 @@ func UpdateBuku (w http.ResponseWriter, r *http.Request, id string) {
 	}
 	defer r.Body.Close()
 
-	db,err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/perpustakaan")
+	db,err := sql.Open("mysql", "root:@tcp(167.205.67.224:3306)/perpustakaan")
 	if err != nil{
 		log.Fatal(err)
 	}

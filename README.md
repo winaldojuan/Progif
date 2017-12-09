@@ -1,13 +1,16 @@
 # Progif
 
 Dokumentasi Penggunaan atau pengujian dari webservice pengaturan data buku perpustakaan:
-1. Buka browser, dan masukkan alamat http://localhost:8181/home/
-2. Setelah masuk, akan terlihat 4 tombol, yaitu GET, POST, UPDATE, dan DELETE
-3. Pengujian akan dilakukan menurut modul yang telah dibuat
+1. Konek ke jaringan ITB
+2. Buka browser, dan masukkan alamat http://167.205.67.224:8181/home/
+3. Setelah masuk, akan terlihat 4 tombol, yaitu GET, POST, UPDATE, dan DELETE
+4. Pengujian akan dilakukan menurut modul yang telah dibuat
 
 Pengujian GET Request:
 1. Klik tombol "GET"
 2. Akan terlihat 6 tombol, yaitu getall, search by judul, search by penulis, search by tahun terbit, search by penerbit, dan home
+
+*NB : untuk setiap tombol, diklik, jangan dengan "enter"
 
 **Modul Get All**
 1. Pertama, klik tombol Get All. Setelah itu akan masuk ke halaman yang memiliki 1 tombol
@@ -107,4 +110,4 @@ Pengujian GET Request:
 6. Webservice akan delete data
 7. Data di tabel "test" akan ditampilkan ketika tombol "delete" diklik
 8. Apabila ketika delete diklik tidak menampilkan apapun, artinya data di tabel hanya 1 dan telah didelete sesuai permintaan pengguna
-8. Klik tombol "home" untuk kembali ke halaman utama
+9. Klik tombol "home" untuk kembali ke halaman utama
