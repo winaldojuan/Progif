@@ -57,8 +57,12 @@ func main(){
     http.HandleFunc("/get/penerbit/", func (w http.ResponseWriter, r *http.Request){
         http.ServeFile(w,r,"penerbit.html")
     })
-    http.HandleFunc("/get/", func (w http.ResponseWriter, r *http.Request){
+    http.HandleFunc("/get/getall", func (w http.ResponseWriter, r *http.Request){
         http.ServeFile(w,r,"getall.html")
+    })
+
+    http.HandleFunc("/get/", func (w http.ResponseWriter, r *http.Request){
+        http.ServeFile(w,r,"get.html")
     })
 
     //PUT Request

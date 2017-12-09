@@ -7,7 +7,7 @@
             event.preventDefault();
             var xhr = new XMLHttpRequest();
             
-            xhr.open("GET", "http://localhost:8181/buku/?penulis="+document.getElementById("Penulis").value);
+            xhr.open("GET", "http://localhost:8181/buku/?tahun="+document.getElementById("Tahun").value);
             
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == XMLHttpRequest.DONE){
@@ -24,14 +24,14 @@
 <body>
     
     <div>
-        <h1>Search by Penulis</h1>
+        <h1>Search by Tahun Terbit</h1>
     
             
             <br>
-            Penulis : <input type="text" id="Penulis">
+            Tahun Terbit : <input type="text" id="Tahun">
             <br>
             <button onclick=search(event)>Search</button>
-           
+            <button onclick=location.href="http://localhost:8181/get/">Back</button>
     </div>
     <span id="a"></span>
 </body>
