@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html>
+<meta charset = "utf-8"/>
+<head>
+    <script>
+        function post(event){
+            event.preventDefault();
+            var xhr = new XMLHttpRequest();
+            xhr.open("DELETE", "http://localhost:8181/delete/"+document.getElementById("ID_buku").value);
+            xhr.send(null);
+        }
+    </script>
+</head>
+
+<div>
+    <h1>Delete</h1>
+    <form>
+
+        ID Buku yang ingin dihapus: <input type="text" id="ID_buku" >
+        <br>
+        
+        <button onclick=post(event)>Post</button>
+       
+    </form>
+</div>

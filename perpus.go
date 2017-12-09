@@ -30,12 +30,12 @@ type myBuku2 struct{
 func main(){
     port:=8181
     //ServeFile
-    http.HandleFunc("/test", func(w http.ResponseWriter, r*http.Request){
-        http.ServeFile(w,r,"testing.html")
+    http.HandleFunc("/post", func(w http.ResponseWriter, r*http.Request){
+        http.ServeFile(w,r,"post.html")
     })
 
     http.HandleFunc("/update/", func (w http.ResponseWriter, r *http.Request){
-        http.ServeFile(w,r,"up.html")
+        http.ServeFile(w,r,"idup.html")
     })
     
     http.HandleFunc("/get/judul/", func (w http.ResponseWriter, r *http.Request){
@@ -70,6 +70,20 @@ func main(){
         }
        
     })
+
+    //DELETE Request
+    http.HandleFunc("/delete/", func(w http.ResponseWriter, r *http.Request){
+        
+           switch r.Method{
+           case "GET":
+               http.ServeFile(w,r,"delete.html")
+           case "DELETE":
+               s := r.URL.Path[len("/delete/"):]
+               DeleteBuku(w,r,s)
+               break
+           }
+          
+       })
 
     http.HandleFunc("/buku/", func(w http.ResponseWriter, r*http.Request){
         switch r.Method{
